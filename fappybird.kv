@@ -1,5 +1,6 @@
 BoxLayout:
     orientation: 'vertical'
+    screenmanager: screenmanager
 
     canvas.before:
         Color:
@@ -8,6 +9,7 @@ BoxLayout:
             size: self.size
     
     ScreenManager:
+        id: screenmanager
         Screen:
             name: 'home'
 
