@@ -28,6 +28,7 @@ class GameScreen(Screen):
         super(GameScreen, self).__init__(**kwargs)
         self.platforms = []
         self.platform_width = 100
+        self.player_velocity = 0
 
     def on_pre_enter(self, *largs, **kwargs):
         app = App.get_running_app()
@@ -39,20 +40,41 @@ class GameScreen(Screen):
 
     def update_time(self, dt):
         self.time += dt
+        self.recalculate_player_drop(dt)
+
+    def on_touch_up(self, *largs, **kwargs):
+        self.player_velocity = 3 if self.player_velocity < 10 else 10
+
+    def recalculate_player_drop(self, dt):
+        self.player_velocity -= dt * 15
+        print (self.player_velocity)
 
     def on_walls_move(self, *largs, **kwargs):
         self.check_collision()
+        if self.current:
+            #FIXME: hacky stuff
+            self.moves_player()
 
         if self.walls_container.x % self.platform_width == 0:
             self.add_platform()
+
+    def moves_player(self):
+        print(self.player.y, self.walls_container.top, self.player.height)
+        if 0 <= self.player.y <= self.walls_container.top - self.player.height:
+            self.player.y += self.player_velocity
+        else:
+            self.game_over()
 
     def check_collision(self):
         if not self.platforms:
             return
 
         for platform in self.platforms:
-            if platform.x == self.player.right:
-                if platform.y1 <= self.player.y and self.player.top <= platform.y2:
+            if platform.x == self.player.right or platform.x <= self.player.center_x <= platform.right:
+                if (
+                    platform.y1 <= self.player.y
+                    and self.player.top <= platform.y2
+                ):
                     break
                 else:
                     self.game_over()
