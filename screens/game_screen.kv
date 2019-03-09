@@ -69,15 +69,10 @@
         width: self.texture_size[0]
 
 <Player>:
+    source: app.player_pic
     size_hint: None, None
-    size: 20, 20
+    size: 40, 40
 
-    canvas.before:
-        Color:
-            rgba: 1, 0, 0, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size
 
 <Platform>:
     orientation: 'vertical'

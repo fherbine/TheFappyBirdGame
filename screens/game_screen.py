@@ -5,7 +5,7 @@ from kivy.clock import Clock
 from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
-from kivy.uix.widget import Widget
+from kivy.uix.image import Image
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import (
     ObjectProperty,
@@ -16,7 +16,7 @@ class Platform(BoxLayout):
     y1 = NumericProperty()
     y2 = NumericProperty()
 
-class Player(Widget):
+class Player(Image):
     pass
 
 class GameScreen(Screen):
