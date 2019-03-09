@@ -33,6 +33,7 @@ class GameScreen(Screen):
     def on_pre_enter(self, *largs, **kwargs):
         app = App.get_running_app()
         self.time = 0
+        self.read_high_score()
 
     def on_enter(self):
         Clock.schedule_interval(self.update_time, 0)
@@ -81,9 +82,28 @@ class GameScreen(Screen):
 
     def game_over(self):
         Clock.unschedule(self.update_time)
+        self.write_high_score()
         popup = Factory.GameOverPopup()
         popup.score = self.current
         popup.open()
+
+    def read_high_score(self):
+        with open('data/player_data', 'r') as data:
+            line = data.readline()
+
+        self.high_score = line if line else 'None'
+
+
+    def write_high_score(self):
+        with open('data/player_data', 'r') as data:
+            line = data.readline()
+
+        if line:
+            if int(line) > int(self.current):
+                return
+
+        with open('data/player_data', 'w+') as data:
+            data.write(str(self.current))
 
     def add_platform(self):
         platform = Platform()

@@ -4,6 +4,7 @@
     velocity: 50
     time: 0
     current: str(int(root.time * root.velocity))
+    high_score: 'None'
 
     BoxLayout:
         orientation: 'vertical'
@@ -11,6 +12,7 @@
         TopInfosBox:
             size_hint_y: .1
             current: root.current
+            high_score: root.high_score
 
         FloatLayout:
             Player:
