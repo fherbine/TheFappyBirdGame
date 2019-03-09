@@ -1,0 +1,64 @@
+BoxLayout:
+    orientation: 'vertical'
+
+    canvas.before:
+        Color:
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    ScreenManager:
+        Screen:
+            name: 'home'
+
+            BoxLayout:
+                orientation: 'vertical'
+            
+                StyledLabel:
+                    pos_hint: {'center_x': .5}
+                    text: 'Fappy Bird'.capitalize()
+                    size_hint_x: None
+                    size: self.texture_size
+                    text_size: root.width / 10, None
+                    font_size: root.width / 30
+                    halign: 'center'
+
+                BoxLayout:
+                    pos_hint: {'center_x': .5}
+                    size_hint_x: None
+                    width: self.minimum_width
+                    orientation: 'vertical'
+                    spacing: dp(20)
+
+                    Widget:
+
+                    SubmitButton:
+                        text: 'start a new game'.capitalize()
+                        font_size: root.width / 35
+
+                    SubmitButton:
+                        text: 'choose an avatar'.capitalize()
+                        font_size: root.width / 35
+
+                    Widget:
+
+
+<SubmitButton@LabelButton>:
+    bg_on: 'on'
+    bg_off: 'off'
+    size_hint: None, None
+    width: self.texture_size[0] + dp(20)
+    height: self.font_size + dp(10)
+
+    canvas.before:
+        Color:
+        BorderImage:
+            source: 'data/images/submit_%s.png' % (self.bg_off if self.state == 'normal' else self.bg_on)
+            border: 7, 7, 7, 7
+            size: self.size
+            pos: self.pos
+
+<LabelButton@ButtonBehavior+Label>:
+
+<StyledLabel@Label>:
+    color: rgba('#333333')
