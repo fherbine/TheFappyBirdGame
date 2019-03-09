@@ -1,0 +1,60 @@
+<GameOverPopup>:
+    score: 0
+    size_hint: .6, .6
+
+    canvas:
+        Clear:
+
+    canvas.before:
+        Color:
+        Rectangle:
+            size: [wh + 6 for wh in self.size]
+            pos: [xy - 3 for xy in self.pos]
+        Color:
+            rgba: .3, .3, .3, 1
+        Line:
+            points:
+                (
+                self.x, self.y,
+                self.x, self.top,
+                self.right, self.top,
+                self.right, self.y,
+                self.x, self.y,
+                )
+            width: dp(1.5)
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 0, 0, 0, dp(20)
+
+        StyledLabel:
+            text: 'You\'re dead with the following score: {}'.format(root.score)
+            font_size: root.width / 10
+            text_size: self.width, None
+            halign: 'center'
+
+        PopupButton:
+            pos_hint: {'center_x': .5}
+            text: '< Menu'
+
+            on_release:
+                root.dismiss()
+
+
+<PopupButton@LabelButton>:
+    size_hint: None, None
+    width: self.texture_size[0] + dp(20)
+    height: self.font_size + dp(20)
+    color: rgba('#000000')
+
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Line:
+            points:
+                (
+                self.x, self.y,
+                self.x, self.top,
+                self.right, self.top,
+                self.right, self.y,
+                self.x, self.y,
+                )

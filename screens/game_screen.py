@@ -2,6 +2,7 @@ from random import Random
 
 from kivy.app import App
 from kivy.clock import Clock
+from kivy.factory import Factory
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.uix.widget import Widget
@@ -58,6 +59,9 @@ class GameScreen(Screen):
 
     def game_over(self):
         Clock.unschedule(self.update_time)
+        popup = Factory.GameOverPopup()
+        popup.score = self.current
+        popup.open()
 
     def add_platform(self):
         platform = Platform()

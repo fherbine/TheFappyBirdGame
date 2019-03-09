@@ -3,13 +3,14 @@
     walls_container: walls_container
     velocity: 50
     time: 0
+    current: str(int(root.time * root.velocity))
 
     BoxLayout:
         orientation: 'vertical'
 
         TopInfosBox:
             size_hint_y: .1
-            current: str(int(root.time * root.velocity))
+            current: root.current
 
         FloatLayout:
             Player:

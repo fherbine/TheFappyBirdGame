@@ -7,6 +7,7 @@ from kivy.properties import (
 
 import config
 from screens import * # noqa
+from widgets import * # noqa
 
 
 class FappyBirdApp(App):
