@@ -1,18 +1,22 @@
 from kivy.app import App
 from kivy.clock import Clock
-from kivy.properties import ObjectProperty
+from kivy.properties import (
+    ObjectProperty,
+    NumericProperty,
+)
 
 import config
+from screens import * # noqa
 
 
 class FappyBirdApp(App):
     screenmanager = ObjectProperty()
+    time = NumericProperty(0.0)
 
     def build(self):
-        self.time = 0.0
         Clock.schedule_interval(self.update_time, 0)
 
-    def update_time(self, dt)
+    def update_time(self, dt):
         self.time += dt
 
 if __name__ == '__main__':

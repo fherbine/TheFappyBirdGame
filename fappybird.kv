@@ -37,12 +37,15 @@ BoxLayout:
                     SubmitButton:
                         text: 'start a new game'.capitalize()
                         font_size: root.width / 35
+                        on_press: screenmanager.current = 'game'
 
                     SubmitButton:
                         text: 'choose an avatar'.capitalize()
                         font_size: root.width / 35
 
                     Widget:
+        GameScreen:
+            name: 'game'
 
 
 <SubmitButton@LabelButton>:

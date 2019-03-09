@@ -1,0 +1,101 @@
+<GameScreen>:
+    player: player
+    walls_container: walls_container
+    velocity: 50
+    time: 0
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        TopInfosBox:
+            size_hint_y: .1
+            current: str(int(root.time * root.velocity))
+
+        FloatLayout:
+            Player:
+                id: player
+                pos_hint: {'center': (.1, .5)}
+
+            BoxLayout:
+                id: walls_container
+                size_hint_x: None
+                x: int(root.right - root.time * root.velocity)
+
+<TopInfosBox@BoxLayout>:
+    current: ''
+    high_score: 'None'
+    padding: dp(20), 0, 0, 0
+    spacing: dp(20)
+
+    canvas.before:
+        Color:
+            rgba: .2, .2, .2, 1
+        Line:
+            points:
+                (
+                self.x, self.y,
+                self.right, self.y,
+                )
+
+    TopInfoItem:
+        title: 'Current score'
+        value: root.current
+
+    TopInfoItem:
+        title: 'High score'
+        value: root.high_score
+
+    Widget:
+
+<TopInfoItem@BoxLayout>:
+    title: ''
+    value: ''
+    size_hint_x: None
+    width: self.minimum_width
+
+    StyledLabel:
+        text: ('{} : '.format(root.title)).upper()
+        bold: True
+        size_hint_x: None
+        width: self.texture_size[0]
+
+    StyledLabel:
+        text: root.value
+        size_hint_x: None
+        width: self.texture_size[0]
+
+<Player>:
+    size_hint: None, None
+    size: 20, 20
+
+    canvas.before:
+        Color:
+            rgba: 1, 0, 0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Platform>:
+    orientation: 'vertical'
+    size_hint_x: None
+    y1: lower_wall.top
+    y2: upper_wall.y
+
+    Wall:
+        id: upper_wall
+        size_hint_y: None
+
+    Widget:
+
+    Wall:
+        id: lower_wall
+        size_hint_y: None
+
+
+<Wall@Widget>:
+    canvas.before:
+        Color:
+            rgba: rgba('#000000')
+        Rectangle:
+            pos: self.pos
+            size: self.size
