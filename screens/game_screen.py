@@ -46,6 +46,11 @@ class GameScreen(Screen):
     def update_time(self, dt):
         self.time += dt
         self.recalculate_player_drop(dt)
+        if self.velocity and self.velocity < 250:
+            self.update_velocity(dt)
+
+    def update_velocity(self, dt):
+        self.velocity += dt / 2
 
     def on_touch_up(self, *largs, **kwargs):
         self.player_velocity = 3 if self.player_velocity < 10 else 10
