@@ -92,7 +92,17 @@ class GameScreen(Screen):
         self.write_high_score()
         popup = Factory.GameOverPopup()
         popup.score = self.current
+        popup.target = self
         popup.open()
+
+    def reset(self):
+        self.current = ''
+        self.player.y = int(self.height / 2)
+        self.plaforms = []
+        self.walls_container.clear_widgets()
+        self.time = 0
+        self.velocity = 50
+        self.player_velocity = 0
 
     def read_high_score(self):
         with open('data/player_data', 'r') as data:
