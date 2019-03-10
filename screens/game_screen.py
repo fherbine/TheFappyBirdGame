@@ -27,13 +27,17 @@ class GameScreen(Screen):
     def __init__(self, **kwargs):
         super(GameScreen, self).__init__(**kwargs)
         self.platforms = []
-        self.platform_width = 100
         self.player_velocity = 0
+
+    def define_platform_width(self):
+        app = App.get_running_app()
+        self.platform_width = int(app.root.width / 10)
 
     def on_pre_enter(self, *largs, **kwargs):
         app = App.get_running_app()
         self.time = 0
         self.read_high_score()
+        self.define_platform_width()
 
     def on_enter(self):
         Clock.schedule_interval(self.update_time, 0)
@@ -55,7 +59,7 @@ class GameScreen(Screen):
             #FIXME: hacky stuff
             self.moves_player()
 
-        if self.walls_container.x % self.platform_width == 0:
+        if self.walls_container.x % (self.platform_width / 10) == 0:
             self.add_platform()
 
     def moves_player(self):
@@ -118,8 +122,8 @@ class GameScreen(Screen):
         self.walls_container.add_widget(platform)
 
     def find_ys(self, previous, player_size):
-        y1 = Random().randint(self.height / 4, self.height / 2)
-        y2 = Random().randint(self.height / 2, self.height / 1.2)
+        y1 = Random().randint(int(self.height / 4), int(self.height / 2))
+        y2 = Random().randint(int(self.height / 2), int(self.height / 1.2))
         if previous:
             py1 = previous.y1
             py2 = previous.y2
