@@ -147,7 +147,10 @@ class GameScreen(Screen):
         if space > player_size:
             if not previous:
                 return y1, y2
-            if y1 < py2 - player_size or y2 > player_size + py1:
+            if (
+                (y1 < py2 - player_size and y2 - player_size > py1)
+                or (y2 > player_size + py1 and y1 + player_size < py2)
+            ):
                 return y1, y2
 
         return self.find_ys(previous, player_size)
