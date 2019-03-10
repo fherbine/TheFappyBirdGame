@@ -98,7 +98,7 @@ class GameScreen(Screen):
     def reset(self):
         self.current = ''
         self.player.y = int(self.height / 2)
-        self.plaforms = []
+        self.platforms = []
         self.walls_container.clear_widgets()
         self.time = 0
         self.velocity = 50
