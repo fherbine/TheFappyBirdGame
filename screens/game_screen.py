@@ -48,7 +48,6 @@ class GameScreen(Screen):
 
     def recalculate_player_drop(self, dt):
         self.player_velocity -= dt * 15
-        print (self.player_velocity)
 
     def on_walls_move(self, *largs, **kwargs):
         self.check_collision()
@@ -60,7 +59,6 @@ class GameScreen(Screen):
             self.add_platform()
 
     def moves_player(self):
-        print(self.player.y, self.walls_container.top, self.player.height)
         if 0 <= self.player.y <= self.walls_container.top - self.player.height:
             self.player.y += self.player_velocity
         else:
