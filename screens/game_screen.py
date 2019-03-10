@@ -64,7 +64,7 @@ class GameScreen(Screen):
             #FIXME: hacky stuff
             self.moves_player()
 
-        if self.walls_container.x % (self.platform_width / 10) == 0:
+        if self.walls_container.x % int(self.platform_width / 10) == 0:
             self.add_platform()
 
     def moves_player(self):
