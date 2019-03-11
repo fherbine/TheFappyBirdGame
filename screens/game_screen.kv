@@ -5,14 +5,17 @@
     time: 0
     current: str(int(root.time * root.velocity))
     high_score: 'None'
+    running: False
 
     BoxLayout:
         orientation: 'vertical'
 
         TopInfosBox:
+            root: root
             size_hint_y: .1
             current: root.current
             high_score: root.high_score
+            running: root.running
 
         FloatLayout:
             Player:
@@ -30,8 +33,10 @@
 <TopInfosBox@BoxLayout>:
     current: ''
     high_score: 'None'
-    padding: dp(20), 0, 0, 0
+    padding: dp(20), 0, dp(20), 0
     spacing: dp(20)
+    root: None
+    running: False
 
     canvas.before:
         Color:
@@ -52,6 +57,15 @@
         value: root.high_score
 
     Widget:
+
+    ImageButton:
+        pos_hint: {'center_y': .5}
+        source: 'data/images/%s.png' % ('pause' if root.running  else 'resume')
+        size_hint: None, None
+        height: root.height / 2
+        width: self.height
+        on_press:
+            if root.root: root.root.pause() if root.running else root.root.resume()
 
 <TopInfoItem@BoxLayout>:
     title: ''
@@ -100,3 +114,5 @@
         Rectangle:
             pos: self.pos
             size: self.size
+
+<ImageButton@ButtonBehavior+Image>:

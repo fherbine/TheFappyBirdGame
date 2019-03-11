@@ -8,6 +8,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import (
+    BooleanProperty,
     ObjectProperty,
     NumericProperty,
 )
@@ -20,6 +21,7 @@ class Player(Image):
     pass
 
 class GameScreen(Screen):
+    running = BooleanProperty()
     time = NumericProperty()
     player = ObjectProperty()
     walls_container = ObjectProperty()
@@ -28,6 +30,7 @@ class GameScreen(Screen):
         super(GameScreen, self).__init__(**kwargs)
         self.platforms = []
         self.player_velocity = 0
+        self.running = True
 
     def define_platform_width(self):
         app = App.get_running_app()
@@ -38,6 +41,7 @@ class GameScreen(Screen):
         self.time = 0
         self.read_high_score()
         self.define_platform_width()
+        self.running = True
 
     def on_enter(self):
         Clock.schedule_interval(self.update_time, 0)
@@ -52,8 +56,9 @@ class GameScreen(Screen):
     def update_velocity(self, dt):
         self.velocity += dt / 2
 
-    def on_touch_up(self, *largs, **kwargs):
-        self.player_velocity = 3 if self.player_velocity < 10 else 10
+    def on_touch_up(self, touch, *largs, **kwargs):
+        if touch.y < self.walls_container.top:
+            self.player_velocity = 3 if self.player_velocity < 10 else 10
 
     def recalculate_player_drop(self, dt):
         self.player_velocity -= dt * 15
@@ -87,6 +92,14 @@ class GameScreen(Screen):
                 else:
                     self.game_over()
 
+    def pause(self):
+        Clock.unschedule(self.update_time)
+        self.running = False
+
+    def resume(self):
+        Clock.schedule_interval(self.update_time, 0)
+        self.running = True
+
     def game_over(self):
         Clock.unschedule(self.update_time)
         self.write_high_score()
@@ -103,6 +116,7 @@ class GameScreen(Screen):
         self.time = 0
         self.velocity = 50
         self.player_velocity = 0
+        self.running = False
 
     def read_high_score(self):
         with open('data/player_data', 'r') as data:
